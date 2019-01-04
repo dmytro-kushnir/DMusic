@@ -19,7 +19,7 @@ import { Hideo } from 'react-native-textinput-effects';
 import SearchResults from './SearchResults';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-class HomeScreen extends React.Component {
+class SearchScreen extends React.Component {
   state = {
     searchQuery: '',
     page: 'search'
@@ -59,17 +59,17 @@ function mapStateToProps(store) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen);
 
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   contentContainer: {
-    paddingTop: 0,
+    paddingTop: 0
   },
   searchInputContainer: {
     width,

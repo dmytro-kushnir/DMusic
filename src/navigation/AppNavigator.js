@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {View, Text, Platform, StyleSheet} from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import TabBarIcon from '../components/TabBarIcon';
 import reducer from '../reducers';
 // TODO - add Player, MiniPlayer, Downloads
-import Search from '../screens/HomeScreen'; // TODO - rename to Search
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Search from '../screens/SearchScreen';
 
-const TabIcon = (props) => <Icon size={24} name={props.name} color={props.selected? "black": "#c8c3c3"}/>;
 const store = createStore(reducer, applyMiddleware(thunk));
 const RouterWithRedux = connect()(Router);
 
@@ -17,16 +16,30 @@ export default class AppNavigator extends Component {
   render() {
     return (
         <Provider store={store}>
-          <View style={{flex: 1}}>
+          <View style={styles.container}>
             <RouterWithRedux>
-              <Scene key="root">
-                <Scene key="home" initial tabs={true}>
-                  <Scene key="search" component={Search} title="Search" duration={0} icon={TabIcon} animation="fade"/>
+                <Scene
+                    key="home"
+                    initial tabs={true}>
+                  <Scene
+                      key="search"
+                      name={Platform.OS === 'ios'? `ios-search`: 'md-search'}
+                      component={Search}
+                      title="Search"
+                      duration={0}
+                      icon={TabBarIcon}
+                      animation="fade"/>
                 </Scene>
-              </Scene>
             </RouterWithRedux>
           </View>
         </Provider>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff'
+    }
+});
