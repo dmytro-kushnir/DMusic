@@ -1,3 +1,4 @@
 import * as searchActions from './search.actions';
+import * as musicActions from './music.actions';
 
-export default {...searchActions};
+export default {...searchActions, ...musicActions};

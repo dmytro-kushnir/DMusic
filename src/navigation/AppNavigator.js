@@ -6,8 +6,9 @@ import { connect, Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import TabBarIcon from '../components/TabBarIcon';
 import reducer from '../reducers';
-// TODO - add Player, MiniPlayer, Downloads
+// TODO - add Player, MiniPlayer
 import Search from '../screens/SearchScreen';
+import Downloads from '../screens/DownloadsScreen';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 const RouterWithRedux = connect()(Router);
@@ -15,20 +16,32 @@ const RouterWithRedux = connect()(Router);
 export default class AppNavigator extends Component {
   render() {
     return (
-        <Provider store={store}>
-          <View style={styles.container}>
+        <Provider
+            store={store}>
+          <View
+              style={styles.container}>
             <RouterWithRedux>
                 <Scene
-                    key="home"
+                    key="root"
                     initial tabs={true}>
-                  <Scene
-                      key="search"
-                      name={Platform.OS === 'ios'? `ios-search`: 'md-search'}
-                      component={Search}
-                      title="Search"
-                      duration={0}
-                      icon={TabBarIcon}
-                      animation="fade"/>
+                    <Scene
+                        animation="fade"
+                        component={Search}
+                        duration={0}
+                        icon={TabBarIcon}
+                        key="search"
+                        name={Platform.OS === 'ios'? `ios-search`: 'md-search'}
+                        title="Search">
+                    </Scene>
+                    <Scene
+                        animation="fade"
+                        component={Downloads}
+                        duration={0}
+                        icon={TabBarIcon}
+                        initial title="Downloads"
+                        key="download"
+                        name={Platform.OS === 'ios'? `ios-download`: 'md-download'}>
+                    </Scene>
                 </Scene>
             </RouterWithRedux>
           </View>
