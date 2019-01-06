@@ -53,7 +53,9 @@ class DownloadsScreen extends Component {
                 <View style={styles.homeContainer}>
                     <FlatList
                         data={this.props.songs}
-                        renderItem={({item, index}) => (<Song
+                        renderItem={
+                            ({item, index}) => (
+                            <Song
                             onPress={this.onSongPlay.bind(this, index)}
                             songName={item.title}
                             artistName={item.artist}
@@ -61,7 +63,8 @@ class DownloadsScreen extends Component {
                             deleteMusic={this.deleteSong.bind(this, index)}
                             songIndex={index}
                             id={item.id}
-                        />)}
+                            />
+                        )}
                     />
                 </View>
             </View>);

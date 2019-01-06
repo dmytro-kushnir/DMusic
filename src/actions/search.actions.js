@@ -34,11 +34,10 @@ async function setDownloadedSongs(songs) {
     let downloadedSongs = await Utils.getSongsFromStorage();
     return _.map(songs, song => {
         let foundSong = _.findWhere(downloadedSongs, {id: song.id});
-        if(foundSong) {
+        if (foundSong) {
             foundSong.downloaded = true;
             return foundSong;
         }
-
         return song;
     });
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, Platform, StyleSheet} from 'react-native';
+import {View, Text, Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
@@ -9,7 +9,7 @@ import reducer from '../reducers';
 // TODO - add Player, MiniPlayer
 import Search from '../screens/SearchScreen';
 import Downloads from '../screens/DownloadsScreen';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const store = createStore(reducer, applyMiddleware(thunk));
 const RouterWithRedux = connect()(Router);
 
@@ -38,9 +38,11 @@ export default class AppNavigator extends Component {
                         component={Downloads}
                         duration={0}
                         icon={TabBarIcon}
-                        initial title="Downloads"
+                        title="Downloads"
                         key="download"
-                        name={Platform.OS === 'ios'? `ios-download`: 'md-download'}>
+                        name={Platform.OS === 'ios'? `ios-download`: 'md-download'}
+                        navigationBarStyle={styles.navBarStyle}
+                    >
                     </Scene>
                 </Scene>
             </RouterWithRedux>
@@ -54,5 +56,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    navBarStyle: {
+        backgroundColor: '#fff',
+        borderBottomWidth: 1
+    },
+    hey: {
+        width: 130, height: 30,
+        paddingRight: 20
     }
 });
