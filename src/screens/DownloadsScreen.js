@@ -5,7 +5,8 @@ import {
     Text,
     TouchableOpacity,
     FlatList,
-    List, StyleSheet
+    List,
+    StyleSheet
 } from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -49,25 +50,29 @@ class DownloadsScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.homeContainer}>
+            <View
+                style={styles.container}>
+                <View
+                    style={styles.homeContainer}>
                     <FlatList
                         data={this.props.songs}
                         renderItem={
                             ({item, index}) => (
-                            <Song
-                            onPress={this.onSongPlay.bind(this, index)}
-                            songName={item.title}
-                            artistName={item.artist}
-                            songImage={item.thumb}
-                            deleteMusic={this.deleteSong.bind(this, index)}
-                            songIndex={index}
-                            id={item.id}
-                            />
-                        )}
-                    />
+                                <Song
+                                    onPress={this.onSongPlay.bind(this, index)}
+                                    songName={item.title}
+                                    artistName={item.artist}
+                                    songImage={item.thumb}
+                                    deleteMusic={this.deleteSong.bind(this, index)}
+                                    songIndex={index}
+                                    id={item.id}>
+                                </Song>
+                            )
+                        }>
+                    </FlatList>
                 </View>
-            </View>);
+            </View>
+        );
     }
 }
 
@@ -87,8 +92,8 @@ const styles = StyleSheet.create({
     homeContainer: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 100,
-        paddingTop: 64
+        paddingBottom: 50,
+        paddingTop: 34
     },
     container: {
         flex: 1,

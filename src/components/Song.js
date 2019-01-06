@@ -20,8 +20,9 @@ import ActionCreators from '../actions';
 let {height, width} = Dimensions.get('window');
 
 class Song extends Component {
+
     state = {
-        songImage: "../assets/images/music.jpg",
+        songImage: "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/",
         downloading: false
     };
 
@@ -38,47 +39,63 @@ class Song extends Component {
     }
 
     render() {
-        return this.props.search? SearchedSong.call(this): DownloadedSong.call(this)
+        return this.props.search? SearchedSong.call(this): DownloadedSong.call(this);
     }
 }
 
 function SearchedSong() {
     let song = this.props.searchResults[this.props.songIndex];
-    return (<TouchableOpacity style={styles.searchSongContainer} onPress={() => this.props.onPress(song.downloaded)}>
-        <View style={[styles.songView, {width: width - 60}]}>
-            <Image
-                source={{uri: this.props.songImage || this.state.songImage}}
-                style={styles.songTitleImage}
-            />
-            <View style={styles.songTitleContainer}>
-                <Text style={styles.songArtistText} numberOfLines={1}>{this.props.artistName || "Unknown Artist"}</Text>
-                <Text style={styles.songTitleText} numberOfLines={1}>{this.props.songName || "Unknown Song"}</Text>
+    return (
+        <TouchableOpacity style={styles.searchSongContainer} onPress={() => this.props.onPress(song.downloaded)}>
+            <View style={[styles.songView, {width: width - 60}]}>
+                <Image
+                    source={{uri: this.props.songImage || this.state.songImage}}
+                    style={styles.songTitleImage}>
+                </Image>
+                <View style={styles.songTitleContainer}>
+                    <Text style={styles.songArtistText} numberOfLines={1}>
+                        {this.props.artistName || "Unknown Artist"}
+                    </Text>
+                    <Text style={styles.songTitleText} numberOfLines={1}>
+                        {this.props.songName || "Unknown Song"}
+                    </Text>
+                </View>
             </View>
-        </View>
-        {renderProgressBar.call(this)}
-    </TouchableOpacity>)
+            {renderProgressBar.call(this)}
+        </TouchableOpacity>
+    )
 }
 
+
 function DownloadedSong() {
-    return (<Swipeout
-        right={this.swipeBtns}
-        backgroundColor= 'transparent'
-        autoClose={true}
-    >
-        <TouchableOpacity style={styles.downloadSongContainer} onPress={this.props.onPress}>
-            <View style={styles.songView}>
-                <Image
-                    source={{uri: (Platform.OS == 'android'?'file://': "") + this.props.songImage || this.state.songImage}}
-                    style={styles.songTitleImage}
-                />
-                <View style={styles.songTitleContainer}>
-                    <Text style={styles.songArtistText} numberOfLines={1}>{this.props.artistName || "Unknown Artist"}</Text>
-                    <Text style={styles.songTitleText} numberOfLines={1}>{this.props.songName || "Unknown Song"}</Text>
+    // console.log("this.state -> ", this.state);
+    // console.log("this.props.songImage -> 1", this.props.songImage);
+    // console.log("this.state.songImage -> ", this.state.songImage);
+    this.props.songImage = Platform.OS == 'android'?'file://': "" + this.props.songImage;
+    return (
+        <Swipeout
+            right={this.swipeBtns}
+            backgroundColor= 'transparent'
+            autoClose={true}>
+            <TouchableOpacity style={styles.downloadSongContainer} onPress={this.props.onPress}>
+                <View style={styles.songView}>
+                    <Image
+                        source={{uri: this.props.songImage || this.state.songImage}}
+                        style={styles.songTitleImage}>
+                    </Image>
+                    <View style={styles.songTitleContainer}>
+                        <Text style={styles.songArtistText} numberOfLines={1}>
+                            {this.props.artistName || "Unknown Artist"}
+                        </Text>
+                        <Text style={styles.songTitleText} numberOfLines={1}>
+                            {this.props.songName || "Unknown Song"}
+                        </Text>
+                    </View>
+                    {renderProgressBar.call(this, true)}
                 </View>
-                {renderProgressBar.call(this, true)}
-            </View>
-        </TouchableOpacity>
-    </Swipeout>)
+            </TouchableOpacity>
+        </Swipeout>
+    )
 }
 
 function renderProgressBar(downloads) {
@@ -96,12 +113,15 @@ function renderProgressBar(downloads) {
 
     let progress = this.props.progreses[this.props.id];
     if (song.downloading || this.state.downloading) {
-        return (<AnimatedCircularProgress
-            size={40}
-            width={3}
-            fill={progress?progress * 100: 0}
-            tintColor="#00e0ff"
-            backgroundColor="#3d5875" />)
+        return (
+            <AnimatedCircularProgress
+                size={40}
+                width={3}
+                fill={progress?progress * 100: 0}
+                tintColor="#00e0ff"
+                backgroundColor="#3d5875">
+            </AnimatedCircularProgress>
+        )
     }
 
     if (downloads) {
@@ -109,8 +129,13 @@ function renderProgressBar(downloads) {
     }
 
     return (
-        <TouchableOpacity onPress={() => !song.downloading && this.downloadMusic(song)} style={{width: 60, paddingLeft: 20}}>
-            <Icon name='md-download' size={40}/>
+        <TouchableOpacity
+            onPress={() => !song.downloading && this.downloadMusic(song)}
+            style={{width: 60, paddingLeft: 20}}>
+            <Icon
+                name='md-download'
+                size={40}>
+            </Icon>
         </TouchableOpacity>
     )
 }
@@ -164,4 +189,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#f1f0f0"
     },
+    downloadSongContainer: {
+        width,
+        height: 60,
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: "#f1f0f0"
+    }
 });
