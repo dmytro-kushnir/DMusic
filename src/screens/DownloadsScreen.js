@@ -30,8 +30,10 @@ class DownloadsScreen extends Component {
             <TouchableOpacity
                 onPress={DownloadsScreen.onRight}>
                 <Icon
+                    style={styles.rightIcon}
                     name="refresh"
-                    size={20} />
+                    size={20}>
+                </Icon>
             </TouchableOpacity>
         );
     }
@@ -92,11 +94,13 @@ const styles = StyleSheet.create({
     homeContainer: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 100,
-        paddingTop: 64
+        paddingBottom: 50
     },
     container: {
         flex: 1,
         backgroundColor: '#fff'
+    },
+    rightIcon: {
+        marginRight: 10
     }
 });
