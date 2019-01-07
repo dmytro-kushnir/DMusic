@@ -68,9 +68,6 @@ function SearchedSong() {
 
 
 function DownloadedSong() {
-    // console.log("this.state -> ", this.state);
-    // console.log("this.props.songImage -> 1", this.props.songImage);
-    // console.log("this.state.songImage -> ", this.state.songImage);
     this.props.songImage = Platform.OS == 'android'?'file://': "" + this.props.songImage;
     return (
         <Swipeout

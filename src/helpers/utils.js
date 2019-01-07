@@ -79,7 +79,6 @@ export function urlToBlob(url) {
 // Create any app folders that don't already exist
 export const checkAndCreateFolder = async folder_path => {
     const folder_info = await FileSystem.getInfoAsync(folder_path);
-    console.log("!! ", folder_info);
     if (!Boolean(folder_info.exists)) {
         // Create folder
         console.log("checkAndCreateFolder: Making " + folder_path);
@@ -99,3 +98,22 @@ export const checkAndCreateFolder = async folder_path => {
         }
     }
 };
+
+export function formattedTime( timeInSeconds ) {
+    let minutes = Math.floor(timeInSeconds / 60);
+    let seconds = timeInSeconds - minutes * 60;
+
+    if (isNaN(minutes) || isNaN(seconds) || minutes < 0 && seconds < 0) {
+        return "";
+    } else {
+        return(`${withLeadingZero(minutes)}:${withLeadingZero(seconds.toFixed(0))}`);
+    }
+}
+
+function withLeadingZero(amount){
+    if (amount < 10) {
+        return `0${amount}`;
+    } else {
+        return `${amount}`;
+    }
+}

@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     homeContainer: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: 50,
-        paddingTop: 34
+        paddingBottom: 100,
+        paddingTop: 64
     },
     container: {
         flex: 1,

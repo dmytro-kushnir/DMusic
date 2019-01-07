@@ -6,9 +6,10 @@ import { connect, Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import TabBarIcon from '../components/TabBarIcon';
 import reducer from '../reducers';
-// TODO - add Player, MiniPlayer
-import Search from '../screens/SearchScreen';
-import Downloads from '../screens/DownloadsScreen';
+import SearchScreen from '../screens/SearchScreen';
+import DownloadsScreen from '../screens/DownloadsScreen';
+import PlayerScreen from '../screens/PlayerScreen';
+import MiniPlayerScreen from '../screens/MiniPlayerScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const store = createStore(reducer, applyMiddleware(thunk));
 const RouterWithRedux = connect()(Router);
@@ -20,30 +21,35 @@ export default class AppNavigator extends Component {
             store={store}>
           <View
               style={styles.container}>
+              <MiniPlayerScreen/>
             <RouterWithRedux>
                 <Scene
-                    key="root"
-                    initial tabs={true}>
+                    key="root">
                     <Scene
-                        animation="fade"
-                        component={Search}
-                        duration={0}
-                        icon={TabBarIcon}
-                        key="search"
-                        name={Platform.OS === 'ios'? `ios-search`: 'md-search'}
-                        title="Search">
+                        key="home"
+                        initial tabs={true} hideNavBar>
+                        <Scene
+                            animation="fade"
+                            component={SearchScreen}
+                            duration={0}
+                            icon={TabBarIcon}
+                            key="search"
+                            name={Platform.OS === 'ios'? `ios-search`: 'md-search'}
+                            title="Search">
+                        </Scene>
+                        <Scene
+                            animation="fade"
+                            component={DownloadsScreen}
+                            duration={0}
+                            icon={TabBarIcon}
+                            title="Downloads"
+                            key="download"
+                            name={Platform.OS === 'ios'? `ios-download`: 'md-download'}
+                            navigationBarStyle={styles.navBarStyle}
+                        >
+                        </Scene>
                     </Scene>
-                    <Scene
-                        animation="fade"
-                        component={Downloads}
-                        duration={0}
-                        icon={TabBarIcon}
-                        title="Downloads"
-                        key="download"
-                        name={Platform.OS === 'ios'? `ios-download`: 'md-download'}
-                        navigationBarStyle={styles.navBarStyle}
-                    >
-                    </Scene>
+                    <Scene key="player" component={PlayerScreen} hideNavBar hideTabBar direction="vertical"/>
                 </Scene>
             </RouterWithRedux>
           </View>

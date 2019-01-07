@@ -20,7 +20,7 @@ import * as Utils from '../helpers/utils';
 class SearchResults extends Component {
 
     async songClick(data, index, downloaded) {
-        if(!downloaded) {
+        if (!downloaded) {
             let song = this.props.searchResults[index];
             try {
                 song.preparing = true;
@@ -34,8 +34,7 @@ class SearchResults extends Component {
                 console.warn(err);
             }
         }
-        // TODO
-        // this.props.setPlayingSong(index, this.props.searchResults);
+        this.props.setPlayingSong(index, this.props.searchResults);
 
     }
 
