@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.reaptorrr697.DMusic",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.reaptorrr697.DMusic"
     }
   }
 }

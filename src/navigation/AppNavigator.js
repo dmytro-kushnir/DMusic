@@ -27,7 +27,8 @@ export default class AppNavigator extends Component {
                     key="root">
                     <Scene
                         key="home"
-                        initial tabs={true} hideNavBar>
+                        initial tabs={true}
+                        hideNavBar>
                         <Scene
                             animation="fade"
                             component={SearchScreen}
@@ -49,7 +50,13 @@ export default class AppNavigator extends Component {
                         >
                         </Scene>
                     </Scene>
-                    <Scene key="player" component={PlayerScreen} hideNavBar hideTabBar direction="vertical"/>
+                    <Scene
+                        key="player"
+                        component={PlayerScreen}
+                        hideNavBar
+                        hideTabBar
+                        direction="vertical">
+                    </Scene>
                 </Scene>
             </RouterWithRedux>
           </View>
