@@ -17,7 +17,7 @@ export function filterSearchResults(res) {
 }
 
 export function getSongUrl(id) {
-    return `${Config.API_URL}${id}`;
+    return `${Config.API_URL}${id}${Config.API_PARAMS}`;
 }
 
 export async function getSongsFromStorage() {
@@ -37,9 +37,11 @@ export function findSongInCollection(id, songs) {
 }
 
 export async function getSongInfo(path, recoverId) {
-    let res = await fetch(recoverId? getSongUrl(recoverId): path);
+    let res = await fetch(recoverId ? getSongUrl(recoverId): path);
     let data = await res.json();
-    if(data.status) return data;
+    if (data.status) {
+        return data;
+    }
     throw data.error;
 }
 

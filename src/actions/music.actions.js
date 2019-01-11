@@ -1,5 +1,6 @@
 import * as types from './types';
-import { Constants, FileSystem } from 'expo';
+import RNFetchBlob from 'react-native-fetch-blob';
+import RNFS from 'react-native-fs';
 import * as Utils from '../helpers/utils';
 import {AsyncStorage} from 'react-native';
 import _ from 'underscore';
@@ -21,6 +22,9 @@ export function downloadMusic(song, changedPath, recover) {
           return {};
         }
         DOWNLOADING_SONGS.push(song);
+        let dirs = RNFetchBlob.fs.dirs;
+
+        console.log("song.path", song.path);
 
         let songInfo = {
             url: song.path
@@ -31,22 +35,24 @@ export function downloadMusic(song, changedPath, recover) {
         }
         song.preparing = false;
 
-        songInfo.url = 'http://raptorrrrrrrrr.pythonanywhere.com/jKLQr5CjArc/';
-        // mp3 song loading to local directory
-        const songDir = `${FileSystem.documentDirectory}uploads/`;
-        const songPath = `${songDir}jKLQr5CjArc.mp3`;
-        await Utils.checkAndCreateFolder(songDir);
-        const songRes = await FileSystem.downloadAsync(songInfo.url, songPath);
-        // thumbnail loading to local directory
-        const thumbDir = `${FileSystem.documentDirectory}photo/`;
-        const thumbPath = `${thumbDir}${song.id}.jpg`;
-        await Utils.checkAndCreateFolder(thumbDir);
-        const imgRes = await FileSystem.downloadAsync(recover ? Utils.getThumbUrl(song.id): song.thumb, thumbPath);
+        const songRes = await RNFetchBlob
+            .config({
+              path: `${dirs.DocumentDir}/${song.id}.mp4`
+            })
+            .fetch('GET', songInfo.url, {})
+            .progress((received, total) => {
+              dispatch(setProgress(received / total, song.id));
+            });
+        const imgRes = await RNFetchBlob
+            .config({
+              path: `${dirs.DocumentDir}/${song.id}.jpg`
+            })
+            .fetch('GET', recover? Utils.getThumbUrl(song.id): song.thumb, {});
 
         song.downloading = false;
         song.downloaded = true;
-        song.path = songRes.uri;
-        song.thumb = imgRes.uri;
+        song.path = songRes.path();
+        song.thumb = imgRes.path();
         song.key = song.id;
         DOWNLOADING_SONGS.pop();
         DOWNLOADED_SONGS.push(song);
@@ -78,8 +84,8 @@ export function deleteSong(index, song) {
   return async (dispatch) => {
     let songs = await Utils.getSongsFromStorage();
     try {
-      await FileSystem.deleteAsync(song.path);
-      await FileSystem.deleteAsync(song.path);
+      await RNFS.unlink(song.path);
+      await RNFS.unlink(song.thumb);
       songs.splice(index, 1);
       await AsyncStorage.setItem('songs', JSON.stringify(songs));
       return dispatch(setSongs(songs));
@@ -109,8 +115,7 @@ export function setProgress(progress, id) {
 
 export function recoverDeletedSongs(songs) {
   return async dispatch => {
-    // TODO - possible remade logic with getInfoAsync
-    let promises = _.map(songs, song => FileSystem.getInfoAsync(song.path));
+    let promises = _.map(songs, song => RNFS.exists(song.path))
     let results = await Promise.all(promises);
     _.each(results, (res, index) => !res && dispatch(downloadMusic(songs[index], false, true)));
   }
