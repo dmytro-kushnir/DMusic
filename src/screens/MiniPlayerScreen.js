@@ -13,11 +13,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ActionCreators from '../actions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Video} from 'expo';
+import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
-// import MusicControl from 'react-native-music-control';
-import * as Progress from 'react-native-progress';
+import MusicControl from 'react-native-music-control';
+// import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'underscore';
 
@@ -44,11 +44,12 @@ class PlayerScreen extends Component {
   }
 
   togglePlay(status) {
+    console.log('HEYYY status -> ', status);
     this.props.setPlaying(status);
-    // MusicControl.updatePlayback({
-    //   state: status? MusicControl.STATE_PLAYING: MusicControl.STATE_PAUSED,
-    //   elapsedTime: this.state.currentTime
-    // })
+    MusicControl.updatePlayback({
+      state: status? MusicControl.STATE_PLAYING: MusicControl.STATE_PAUSED,
+      elapsedTime: this.state.currentTime
+    })
   }
 
   toggleVolume(){
@@ -60,10 +61,10 @@ class PlayerScreen extends Component {
       this.props.setPlayingSong(this.props.songIndex - 1);
     } else {
       this.refs.audio.seek(0);
-      // MusicControl.updatePlayback({
-      //   state: MusicControl.STATE_PLAYING,
-      //   elapsedTime: 0
-      // });
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING,
+        elapsedTime: 0
+      });
     }
   }
 
@@ -87,13 +88,13 @@ class PlayerScreen extends Component {
     let changePath = (!song.downloaded && !song.pathChanged);
     this.props.setPlayingSong(0, changePath? this.props.songs: null, changePath);
     this.props.setPlaying(false);
-    // MusicControl.updatePlayback({
-    //   title: song.title,
-    //   artwork: song.thumb,
-    //   artist: song.artist,
-    //   state: MusicControl.STATE_PAUSED,
-    //   elapsedTime: 0
-    // });
+    MusicControl.updatePlayback({
+      title: song.title,
+      artwork: song.thumb,
+      artist: song.artist,
+      state: MusicControl.STATE_PAUSED,
+      elapsedTime: 0
+    });
   }
 
   setTime(params) {
@@ -127,27 +128,25 @@ class PlayerScreen extends Component {
   }
 
   renderVideoPlayer() {
-    console.log("video props -> ", this.props.songs[this.props.songIndex]);
+    console.log("video props -> ", this.props.songs[this.props.songIndex].path);
     if (this.props.songs[this.props.songIndex]) {
         return (
             <Video
-                source={{uri: this.props.songs[this.props.songIndex].path}}
-                volume={this.props.volume}
-                isMuted={false}
-                // ref="audio"
-                // paused={!this.props.playing}
-                // playInBackground={true}
-                // playWhenInactive={true}
-                // ignoreSilentSwitch={"ignore"}
-                onLoad={ this.onLoad.bind(this) }
-                // onProgress={ this.setTime.bind(this) }
-                onEnd={ this.onEnd.bind(this) }
-                resizeMode="cover"
-                // repeat={false}
-            >
-            </Video>
-        );
-      }
+              source={{uri: this.props.songs[this.props.songIndex].path }}
+              volume={this.props.volume}
+              muted={false}
+              ref="audio"
+              paused={!this.props.playing}
+              playInBackground={true}
+              playWhenInactive={true}
+              ignoreSilentSwitch={"ignore"}
+              onLoad={ this.onLoad.bind(this) }
+              onProgress={ this.setTime.bind(this) }
+              onEnd={ this.onEnd.bind(this) }
+              resizeMode="cover"
+              repeat={false}>
+            </Video>);
+    }
       return null;
   }
 
@@ -185,21 +184,21 @@ class PlayerScreen extends Component {
 
   async componentDidMount() {
     await this.props.getSongs();
-    // MusicControl.enableControl('play', true);
-    // MusicControl.enableControl('pause', true);
-    // MusicControl.enableControl('nextTrack', true);
-    // MusicControl.enableControl('previousTrack', true);
-    // MusicControl.enableControl('seekForward', false);
-    // MusicControl.enableControl('seekBackward', false);
-    // MusicControl.enableBackgroundMode(true);
-    // MusicControl.on('play', ()=> {
-    //   this.togglePlay(true);
-    // });
-    // MusicControl.on('pause', ()=> {
-    //   this.togglePlay(false);
-    // });
-    // MusicControl.on('nextTrack', this.goForward.bind(this));
-    // MusicControl.on('previousTrack', this.goBackward.bind(this));
+    MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('nextTrack', true);
+    MusicControl.enableControl('previousTrack', true);
+    MusicControl.enableControl('seekForward', false);
+    MusicControl.enableControl('seekBackward', false);
+    MusicControl.enableBackgroundMode(true);
+    MusicControl.on('play', ()=> {
+      this.togglePlay(true);
+    });
+    MusicControl.on('pause', ()=> {
+      this.togglePlay(false);
+    });
+    MusicControl.on('nextTrack', this.goForward.bind(this));
+    MusicControl.on('previousTrack', this.goBackward.bind(this));
   }
 
   songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";

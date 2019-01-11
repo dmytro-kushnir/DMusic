@@ -12,7 +12,7 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swipeout from 'react-native-swipeout';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
+// import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ActionCreators from '../actions';
@@ -109,17 +109,17 @@ function renderProgressBar(downloads) {
     }
 
     let progress = this.props.progreses[this.props.id];
-    if (song.downloading || this.state.downloading) {
-        return (
-            <AnimatedCircularProgress
-                size={40}
-                width={3}
-                fill={progress?progress * 100: 0}
-                tintColor="#00e0ff"
-                backgroundColor="#3d5875">
-            </AnimatedCircularProgress>
-        )
-    }
+    // if (song.downloading || this.state.downloading) {
+    //     return (
+    //         <AnimatedCircularProgress
+    //             size={40}
+    //             width={3}
+    //             fill={progress?progress * 100: 0}
+    //             tintColor="#00e0ff"
+    //             backgroundColor="#3d5875">
+    //         </AnimatedCircularProgress>
+    //     )
+    // }
 
     if (downloads) {
         return null;

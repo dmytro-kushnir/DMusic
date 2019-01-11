@@ -16,14 +16,12 @@
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-button": "^2.3.0",
-    "react-native-circular-progress": "^1.1.0",
     "react-native-fs": "^2.13.3",
     "react-native-music-control": "^0.9.6",
     "react-native-platform-touchable": "^1.1.1",
     "react-native-progress": "^3.5.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-slider": "^0.11.0",
-    "react-native-svg": "^8.0.10",
     "react-native-swipeout": "^2.3.6",
     "react-native-textinput-effects": "^0.4.2",
     "react-native-vector-icons": "^6.1.0",
@@ -37,9 +35,6 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^31.0.0"
-  },
-  "resolutions": {
-    "react-native-svg": "^8.0.10"
   },
   "private": true,
   "repository": {

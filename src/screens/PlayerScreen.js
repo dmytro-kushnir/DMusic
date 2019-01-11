@@ -13,11 +13,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ActionCreators from '../actions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import Video from 'react-native-video';
+import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
-// import MusicControl from 'react-native-music-control';
-import * as Progress from 'react-native-progress';
+import MusicControl from 'react-native-music-control';
+// import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'underscore';
 
@@ -36,6 +36,7 @@ class PlayerScreen extends Component {
   }
 
   togglePlay() {
+    console.log("hey1");
     this.props.togglePlay(!this.props.playing);
   }
 
@@ -86,7 +87,7 @@ class PlayerScreen extends Component {
   renderProgressBar() {
     let song = this.props.songs[this.props.songIndex];
     if(song.downloading) {
-      return <Progress.Bar progress={this.props.progreses[song.id]} width={width} color="#fff" borderColor="transparent"/>
+      // return <Progress.Bar progress={this.props.progreses[song.id]} width={width} color="#fff" borderColor="transparent"/>
     }
     return null
   }
