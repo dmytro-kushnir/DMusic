@@ -55,6 +55,8 @@ jarjar-rules.txt
 /ios/Exponent/Generated/EXKeys.h
 /ios/ExponentIntegrationTests/EXTestEnvironment.plist
 /ios/Podfile
+/ios/Pods
+/ios/Podfile.lock
 /exponent-view-template/ios/Podfile
 
 # Codemod
