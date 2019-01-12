@@ -36,7 +36,6 @@ class PlayerScreen extends Component {
   }
 
   togglePlay() {
-    console.log("hey1");
     this.props.togglePlay(!this.props.playing);
   }
 

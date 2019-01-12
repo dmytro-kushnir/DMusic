@@ -133,6 +133,7 @@ class PlayerScreen extends Component {
               source={{uri: this.props.songs[this.props.songIndex].path }}
               volume={this.props.volume}
               muted={false}
+              ref="audio"
               paused={!this.props.playing}
               playInBackground={true}
               playWhenInactive={true}
