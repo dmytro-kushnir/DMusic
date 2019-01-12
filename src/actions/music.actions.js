@@ -1,5 +1,5 @@
 import * as types from './types';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import RNFS from 'react-native-fs';
 import * as Utils from '../helpers/utils';
 import {AsyncStorage} from 'react-native';

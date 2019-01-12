@@ -10,6 +10,11 @@ import expolib_v1.okhttp3.OkHttpClient;
 
 // Needed for `react-native link`
 // import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.rnfs.RNFSPackage;
+import com.brentvatne.react.ReactVideoPackage;
+import com.tanguyantoine.react.MusicControl;
 
 public class MainApplication extends ExpoApplication {
 
@@ -25,7 +30,12 @@ public class MainApplication extends ExpoApplication {
         // TODO: add native modules!
 
         // Needed for `react-native link`
-        // new MainReactPackage()
+        // new MainReactPackage(),
+            new RNFetchBlobPackage(),
+            new VectorIconsPackage(),
+            new RNFSPackage(),
+            new ReactVideoPackage(),
+            new MusicControl()
     );
   }
 

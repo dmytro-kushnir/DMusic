@@ -97,6 +97,11 @@ apply from: 'expo.gradle'
 
 
 dependencies {
+    compile project(':rn-fetch-blob')
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-fs')
+    compile project(':react-native-video')
+    compile project(':react-native-music-control')
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation 'com.android.support:multidex:1.0.1'
