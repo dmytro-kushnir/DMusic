@@ -44,7 +44,6 @@ class PlayerScreen extends Component {
   }
 
   togglePlay(status) {
-    console.log('HEYYY status -> ', status);
     this.props.setPlaying(status);
     MusicControl.updatePlayback({
       state: status? MusicControl.STATE_PLAYING: MusicControl.STATE_PAUSED,
