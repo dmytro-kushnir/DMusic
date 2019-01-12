@@ -127,14 +127,12 @@ class PlayerScreen extends Component {
   }
 
   renderVideoPlayer() {
-    console.log("video props -> ", this.props.songs[this.props.songIndex].path);
     if (this.props.songs[this.props.songIndex]) {
         return (
             <Video
               source={{uri: this.props.songs[this.props.songIndex].path }}
               volume={this.props.volume}
               muted={false}
-              ref="audio"
               paused={!this.props.playing}
               playInBackground={true}
               playWhenInactive={true}

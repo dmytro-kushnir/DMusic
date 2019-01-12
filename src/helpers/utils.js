@@ -50,8 +50,8 @@ export async function getSongInfo(path, recoverId) {
                return stream;
            }
         });
-        console.log("response data stream-> ", res);
-        return res;
+        console.log("response data stream-> ", res[0]);
+        return res[0];
     }
     throw data.error;
 }
