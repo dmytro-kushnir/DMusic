@@ -17,7 +17,7 @@ import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
 import MusicControl from 'react-native-music-control';
-// import * as Progress from 'react-native-progress';
+import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'underscore';
 
