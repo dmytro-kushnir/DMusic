@@ -102,9 +102,8 @@ class PlayerScreen extends Component {
   }
 
   onLoad(params) {
-    let duration = params.duration / 2; //react-native-video bug
-    this.props.setSongDuration(duration);
-    this.setPlayingSong(duration);
+    this.props.setSongDuration(params.duration);
+    this.setPlayingSong(params.duration);
   }
 
   onSlidingComplete(time){
@@ -221,7 +220,7 @@ class PlayerScreen extends Component {
                     {this.props.scene.name === 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
-                      source={{uri: (Platform.OS === 'android'?"file://": "") + song.thumb}}>
+                      source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>
                     </Image>}
                     <Text>
                       {text.slice(0, 30)}...
@@ -231,7 +230,7 @@ class PlayerScreen extends Component {
                         name={this.props.playing?"stop": "play"}
                         size={20}>
                     </FontAwesome>
-                    {renderForwardButton.call(this)}
+                    {/* {renderForwardButton.call(this)} */}
                 </View>
         </TouchableOpacity>
       );
