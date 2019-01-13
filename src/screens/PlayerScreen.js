@@ -86,7 +86,12 @@ class PlayerScreen extends Component {
   renderProgressBar() {
     let song = this.props.songs[this.props.songIndex];
     if(song.downloading) {
-      return <Progress.Bar progress={this.props.progreses[song.id]} width={width} color="#fff" borderColor="transparent"/>
+      return <Progress.Bar
+          progress={this.props.progreses[song.id]}
+          width={width}
+          color="#fff"
+          borderColor="transparent">
+      </Progress.Bar>
     }
     return null
   }
@@ -100,8 +105,8 @@ class PlayerScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <View style={ styles.header }>
-          <Text style={ styles.headerText }>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
             {this.props.songs[this.props.songIndex].artist}
           </Text>
         </View>
@@ -114,7 +119,7 @@ class PlayerScreen extends Component {
         {this.renderProgressBar()}
         <Image
           style={styles.songImage}
-          source={{uri: (Platform.OS == 'android'?"file://": "") + this.props.songs[this.props.songIndex].thumb}}>
+          source={{uri: (Platform.OS === 'android' ? "file://" : "") + this.props.songs[this.props.songIndex].thumb}}>
         </Image>
         <Text
             style={styles.songTitle}

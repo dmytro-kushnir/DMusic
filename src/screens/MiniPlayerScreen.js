@@ -102,9 +102,8 @@ class PlayerScreen extends Component {
   }
 
   onLoad(params) {
-    let duration = params.duration / 2; //react-native-video bug
-    this.props.setSongDuration(duration);
-    this.setPlayingSong(duration);
+    this.props.setSongDuration(params.duration);
+    this.setPlayingSong(params.duration);
   }
 
   onSlidingComplete(time){
@@ -138,9 +137,9 @@ class PlayerScreen extends Component {
               playInBackground={true}
               playWhenInactive={true}
               ignoreSilentSwitch={"ignore"}
-              onLoad={ this.onLoad.bind(this) }
-              onProgress={ this.setTime.bind(this) }
-              onEnd={ this.onEnd.bind(this) }
+              onLoad={this.onLoad.bind(this)}
+              onProgress={this.setTime.bind(this)}
+              onEnd={this.onEnd.bind(this)}
               resizeMode="cover"
               repeat={false}>
             </Video>);
@@ -150,9 +149,10 @@ class PlayerScreen extends Component {
 
   toggleShuffle(status, dontChangeIndex) {
     this.props.setShuffle(status);
-    if(this.props.songs.length == 1) return this.props.setPlayingSong(0);
-
-    if(!status) {
+    if (this.props.songs.length === 1) {
+      return this.props.setPlayingSong(0);
+    }
+    if (!status) {
       let playingSong = this.props.songs[this.props.songIndex];
       let originalIndex = _.findIndex(this.state.originalPlaylist, {id: playingSong.id});
       this.props.setPlayingSong(originalIndex, this.state.originalSongs);
@@ -160,9 +160,9 @@ class PlayerScreen extends Component {
     }
     this.setState({originalPlaylist: this.state.originalPlaylist || [...this.props.songs]});
     let shuffledSongs = _.shuffle(this.props.songs);
-    if(dontChangeIndex) {
+    if (dontChangeIndex) {
       let songId = this.props.songs[this.props.songIndex].id;
-      if(shuffledSongs[0].id == songId) {
+      if (shuffledSongs[0].id === songId) {
           shuffledSongs.push(shuffledSongs.shift());
       }
 
@@ -211,16 +211,16 @@ class PlayerScreen extends Component {
         <TouchableOpacity
             style={
               [styles.playerOverlay,
-              {width: this.props.scene.name == 'player'? 0: width}]
+              {width: this.props.scene.name === 'player' ? 0 : width}]
             }
             onPress={this.openPlayer.bind(this)}>
               {this.renderVideoPlayer()}
               <View
                   style={styles.minimizedPlayer}>
-                    {this.props.scene.name == 'player' ? null:
+                    {this.props.scene.name === 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
-                      source={{uri: (Platform.OS == 'android'?"file://": "") + song.thumb}}>
+                      source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>
                     </Image>}
                     <Text>
                       {text.slice(0, 30)}...
@@ -230,7 +230,7 @@ class PlayerScreen extends Component {
                         name={this.props.playing?"stop": "play"}
                         size={20}>
                     </FontAwesome>
-                    {renderForwardButton.call(this)}
+                    {/* {renderForwardButton.call(this)} */}
                 </View>
         </TouchableOpacity>
       );
@@ -239,15 +239,13 @@ class PlayerScreen extends Component {
 
 function renderForwardButton() {
   if (this.props.songIndex + 1 === this.props.songs.length ) {
-       return
-          <FontAwesome
+       return <FontAwesome
               name="forward"
               size={20}
               color="#333">
           </FontAwesome>;
   }
-  return
-    <FontAwesome
+  return <FontAwesome
         onPress={this.goForward.bind(this)}
         name="forward"
         size={20}>
