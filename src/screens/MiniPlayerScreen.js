@@ -73,11 +73,11 @@ class PlayerScreen extends Component {
 
     if(this.props.shuffle && this.props.songIndex + 1 == this.props.songs.length) {
        return this.toggleShuffle(true, true);
-     }
-
-   if(this.props.songs.length == 1) return;
-
-    if(this.props.songIndex + 1 != this.props.songs.length) {
+    }
+    if (this.props.songs.length === 1) {
+      return;
+    }
+    if (this.props.songIndex + 1 != this.props.songs.length) {
       let index = this.props.songIndex + 1;
       let song = this.props.songs[index];
       let changePath = (!song.downloaded && !song.pathChanged);
@@ -203,7 +203,9 @@ class PlayerScreen extends Component {
 
   render() {
       let song = this.props.songs[this.props.songIndex];
-      if(!song) return null;
+      if (!song) {
+        return null;
+      }
       let text = `${song.artist} - ${song.title}`;
       return (
         <TouchableOpacity
