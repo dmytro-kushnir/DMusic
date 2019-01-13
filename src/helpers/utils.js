@@ -1,7 +1,6 @@
 import {AsyncStorage} from 'react-native';
 import Config from '../config';
 import _ from "underscore";
-import {FileSystem} from "expo";
 
 export function filterSearchResults(res) {
     return res.items.map(item => {
@@ -37,9 +36,23 @@ export function findSongInCollection(id, songs) {
 }
 
 export async function getSongInfo(path, recoverId) {
-    let res = await fetch(recoverId? getSongUrl(recoverId): path);
+    let res = await fetch(recoverId ? getSongUrl(recoverId): path, {
+        method: 'get',
+        headers: new Headers({
+            'X-Mashape-Key': Config.X_MASHAPE_KEY,
+            'Content-Type': 'application/json'
+        })
+    });
     let data = await res.json();
-    if(data.status) return data;
+    if (data.status) {
+        let res = data.streams.filter(stream => {
+           if (stream.format_note === "medium" && stream.extension === "mp4") {
+               return stream;
+           }
+        });
+        console.log("response data stream-> ", res[0]);
+        return res[0];
+    }
     throw data.error;
 }
 
@@ -75,29 +88,6 @@ export function urlToBlob(url) {
         xhr.send();
     })
 }
-
-// Create any app folders that don't already exist
-export const checkAndCreateFolder = async folder_path => {
-    const folder_info = await FileSystem.getInfoAsync(folder_path);
-    if (!Boolean(folder_info.exists)) {
-        // Create folder
-        console.log("checkAndCreateFolder: Making " + folder_path);
-        try {
-            await FileSystem.makeDirectoryAsync(folder_path, {
-                intermediates: true
-            });
-        } catch (error) {
-            // Report folder creation error, include the folder existence before and now
-            const new_folder_info = await FileSystem.getInfoAsync(folder_path);
-            const debug = `checkAndCreateFolder: ${
-                error.message
-                } old:${JSON.stringify(folder_info)} new:${JSON.stringify(
-                new_folder_info
-            )}`;
-            console.log(debug);
-        }
-    }
-};
 
 export function formattedTime( timeInSeconds ) {
     let minutes = Math.floor(timeInSeconds / 60);

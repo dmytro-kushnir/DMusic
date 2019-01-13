@@ -13,10 +13,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ActionCreators from '../actions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Video} from 'expo';
+import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
-// import MusicControl from 'react-native-music-control';
+import MusicControl from 'react-native-music-control';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'underscore';
@@ -45,10 +45,10 @@ class PlayerScreen extends Component {
 
   togglePlay(status) {
     this.props.setPlaying(status);
-    // MusicControl.updatePlayback({
-    //   state: status? MusicControl.STATE_PLAYING: MusicControl.STATE_PAUSED,
-    //   elapsedTime: this.state.currentTime
-    // })
+    MusicControl.updatePlayback({
+      state: status? MusicControl.STATE_PLAYING: MusicControl.STATE_PAUSED,
+      elapsedTime: this.state.currentTime
+    })
   }
 
   toggleVolume(){
@@ -60,10 +60,10 @@ class PlayerScreen extends Component {
       this.props.setPlayingSong(this.props.songIndex - 1);
     } else {
       this.refs.audio.seek(0);
-      // MusicControl.updatePlayback({
-      //   state: MusicControl.STATE_PLAYING,
-      //   elapsedTime: 0
-      // });
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING,
+        elapsedTime: 0
+      });
     }
   }
 
@@ -73,11 +73,11 @@ class PlayerScreen extends Component {
 
     if(this.props.shuffle && this.props.songIndex + 1 == this.props.songs.length) {
        return this.toggleShuffle(true, true);
-     }
-
-   if(this.props.songs.length == 1) return;
-
-    if(this.props.songIndex + 1 != this.props.songs.length) {
+    }
+    if (this.props.songs.length === 1) {
+      return;
+    }
+    if (this.props.songIndex + 1 != this.props.songs.length) {
       let index = this.props.songIndex + 1;
       let song = this.props.songs[index];
       let changePath = (!song.downloaded && !song.pathChanged);
@@ -87,13 +87,13 @@ class PlayerScreen extends Component {
     let changePath = (!song.downloaded && !song.pathChanged);
     this.props.setPlayingSong(0, changePath? this.props.songs: null, changePath);
     this.props.setPlaying(false);
-    // MusicControl.updatePlayback({
-    //   title: song.title,
-    //   artwork: song.thumb,
-    //   artist: song.artist,
-    //   state: MusicControl.STATE_PAUSED,
-    //   elapsedTime: 0
-    // });
+    MusicControl.updatePlayback({
+      title: song.title,
+      artwork: song.thumb,
+      artist: song.artist,
+      state: MusicControl.STATE_PAUSED,
+      elapsedTime: 0
+    });
   }
 
   setTime(params) {
@@ -102,9 +102,8 @@ class PlayerScreen extends Component {
   }
 
   onLoad(params) {
-    let duration = params.duration / 2; //react-native-video bug
-    this.props.setSongDuration(duration);
-    this.setPlayingSong(duration);
+    this.props.setSongDuration(params.duration);
+    this.setPlayingSong(params.duration);
   }
 
   onSlidingComplete(time){
@@ -127,35 +126,33 @@ class PlayerScreen extends Component {
   }
 
   renderVideoPlayer() {
-    console.log("video props -> ", this.props.songs[this.props.songIndex]);
     if (this.props.songs[this.props.songIndex]) {
         return (
             <Video
-                source={{uri: this.props.songs[this.props.songIndex].path}}
-                volume={this.props.volume}
-                isMuted={false}
-                // ref="audio"
-                // paused={!this.props.playing}
-                // playInBackground={true}
-                // playWhenInactive={true}
-                // ignoreSilentSwitch={"ignore"}
-                onLoad={ this.onLoad.bind(this) }
-                // onProgress={ this.setTime.bind(this) }
-                onEnd={ this.onEnd.bind(this) }
-                resizeMode="cover"
-                // repeat={false}
-            >
-            </Video>
-        );
-      }
+              source={{uri: this.props.songs[this.props.songIndex].path }}
+              volume={this.props.volume}
+              muted={false}
+              ref="audio"
+              paused={!this.props.playing}
+              playInBackground={true}
+              playWhenInactive={true}
+              ignoreSilentSwitch={"ignore"}
+              onLoad={this.onLoad.bind(this)}
+              onProgress={this.setTime.bind(this)}
+              onEnd={this.onEnd.bind(this)}
+              resizeMode="cover"
+              repeat={false}>
+            </Video>);
+    }
       return null;
   }
 
   toggleShuffle(status, dontChangeIndex) {
     this.props.setShuffle(status);
-    if(this.props.songs.length == 1) return this.props.setPlayingSong(0);
-
-    if(!status) {
+    if (this.props.songs.length === 1) {
+      return this.props.setPlayingSong(0);
+    }
+    if (!status) {
       let playingSong = this.props.songs[this.props.songIndex];
       let originalIndex = _.findIndex(this.state.originalPlaylist, {id: playingSong.id});
       this.props.setPlayingSong(originalIndex, this.state.originalSongs);
@@ -163,9 +160,9 @@ class PlayerScreen extends Component {
     }
     this.setState({originalPlaylist: this.state.originalPlaylist || [...this.props.songs]});
     let shuffledSongs = _.shuffle(this.props.songs);
-    if(dontChangeIndex) {
+    if (dontChangeIndex) {
       let songId = this.props.songs[this.props.songIndex].id;
-      if(shuffledSongs[0].id == songId) {
+      if (shuffledSongs[0].id === songId) {
           shuffledSongs.push(shuffledSongs.shift());
       }
 
@@ -185,43 +182,45 @@ class PlayerScreen extends Component {
 
   async componentDidMount() {
     await this.props.getSongs();
-    // MusicControl.enableControl('play', true);
-    // MusicControl.enableControl('pause', true);
-    // MusicControl.enableControl('nextTrack', true);
-    // MusicControl.enableControl('previousTrack', true);
-    // MusicControl.enableControl('seekForward', false);
-    // MusicControl.enableControl('seekBackward', false);
-    // MusicControl.enableBackgroundMode(true);
-    // MusicControl.on('play', ()=> {
-    //   this.togglePlay(true);
-    // });
-    // MusicControl.on('pause', ()=> {
-    //   this.togglePlay(false);
-    // });
-    // MusicControl.on('nextTrack', this.goForward.bind(this));
-    // MusicControl.on('previousTrack', this.goBackward.bind(this));
+    MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('nextTrack', true);
+    MusicControl.enableControl('previousTrack', true);
+    MusicControl.enableControl('seekForward', false);
+    MusicControl.enableControl('seekBackward', false);
+    MusicControl.enableBackgroundMode(true);
+    MusicControl.on('play', ()=> {
+      this.togglePlay(true);
+    });
+    MusicControl.on('pause', ()=> {
+      this.togglePlay(false);
+    });
+    MusicControl.on('nextTrack', this.goForward.bind(this));
+    MusicControl.on('previousTrack', this.goBackward.bind(this));
   }
 
   songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
 
   render() {
       let song = this.props.songs[this.props.songIndex];
-      if(!song) return null;
+      if (!song) {
+        return null;
+      }
       let text = `${song.artist} - ${song.title}`;
       return (
         <TouchableOpacity
             style={
               [styles.playerOverlay,
-              {width: this.props.scene.name == 'player'? 0: width}]
+              {width: this.props.scene.name === 'player' ? 0 : width}]
             }
             onPress={this.openPlayer.bind(this)}>
               {this.renderVideoPlayer()}
               <View
                   style={styles.minimizedPlayer}>
-                    {this.props.scene.name == 'player' ? null:
+                    {this.props.scene.name === 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
-                      source={{uri: (Platform.OS == 'android'?"file://": "") + song.thumb}}>
+                      source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>
                     </Image>}
                     <Text>
                       {text.slice(0, 30)}...
@@ -231,7 +230,7 @@ class PlayerScreen extends Component {
                         name={this.props.playing?"stop": "play"}
                         size={20}>
                     </FontAwesome>
-                    {renderForwardButton.call(this)}
+                    {/* {renderForwardButton.call(this)} */}
                 </View>
         </TouchableOpacity>
       );
@@ -240,15 +239,13 @@ class PlayerScreen extends Component {
 
 function renderForwardButton() {
   if (this.props.songIndex + 1 === this.props.songs.length ) {
-       return
-          <FontAwesome
+       return <FontAwesome
               name="forward"
               size={20}
               color="#333">
           </FontAwesome>;
   }
-  return
-    <FontAwesome
+  return <FontAwesome
         onPress={this.goForward.bind(this)}
         name="forward"
         size={20}>

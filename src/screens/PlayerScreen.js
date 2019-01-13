@@ -13,10 +13,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ActionCreators from '../actions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import Video from 'react-native-video';
+import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
-// import MusicControl from 'react-native-music-control';
+import MusicControl from 'react-native-music-control';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'underscore';
@@ -86,7 +86,12 @@ class PlayerScreen extends Component {
   renderProgressBar() {
     let song = this.props.songs[this.props.songIndex];
     if(song.downloading) {
-      return <Progress.Bar progress={this.props.progreses[song.id]} width={width} color="#fff" borderColor="transparent"/>
+      return <Progress.Bar
+          progress={this.props.progreses[song.id]}
+          width={width}
+          color="#fff"
+          borderColor="transparent">
+      </Progress.Bar>
     }
     return null
   }
@@ -100,8 +105,8 @@ class PlayerScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <View style={ styles.header }>
-          <Text style={ styles.headerText }>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
             {this.props.songs[this.props.songIndex].artist}
           </Text>
         </View>
@@ -114,7 +119,7 @@ class PlayerScreen extends Component {
         {this.renderProgressBar()}
         <Image
           style={styles.songImage}
-          source={{uri: (Platform.OS == 'android'?"file://": "") + this.props.songs[this.props.songIndex].thumb}}>
+          source={{uri: (Platform.OS === 'android' ? "file://" : "") + this.props.songs[this.props.songIndex].thumb}}>
         </Image>
         <Text
             style={styles.songTitle}
