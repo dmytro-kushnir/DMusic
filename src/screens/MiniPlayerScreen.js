@@ -227,7 +227,7 @@ class PlayerScreen extends Component {
                     </Text>
                     <FontAwesome
                         onPress={() => this.togglePlay(!this.props.playing)}
-                        name={this.props.playing?"stop": "play"}
+                        name={this.props.playing ? "pause": "play"}
                         size={20}>
                     </FontAwesome>
                     {/* {renderForwardButton.call(this)} */}
