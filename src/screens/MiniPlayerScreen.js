@@ -211,13 +211,13 @@ class PlayerScreen extends Component {
         <TouchableOpacity
             style={
               [styles.playerOverlay,
-              {width: this.props.scene.name === 'player' ? 0 : width}]
+              {width: Actions.currentScene === 'player' ? 0 : width}]
             }
             onPress={this.openPlayer.bind(this)}>
               {this.renderVideoPlayer()}
               <View
                   style={styles.minimizedPlayer}>
-                    {this.props.scene.name === 'player' ? null:
+                    {Actions.currentScene=== 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
                       source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>
@@ -227,18 +227,18 @@ class PlayerScreen extends Component {
                     </Text>
                     <FontAwesome
                         onPress={() => this.togglePlay(!this.props.playing)}
-                        name={this.props.playing ? "pause": "play"}
+                        name={this.props.playing ? "pause" : "play"}
                         size={20}>
                     </FontAwesome>
-                    {/* {renderForwardButton.call(this)} */}
-                </View>
+                    {renderForwardButton.call(this)}
+              </View>
         </TouchableOpacity>
       );
   }
 }
 
 function renderForwardButton() {
-  if (this.props.songIndex + 1 === this.props.songs.length ) {
+  if (this.props.songIndex + 1 === this.props.songs.length) {
        return <FontAwesome
               name="forward"
               size={20}
