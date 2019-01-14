@@ -11,10 +11,10 @@ import expolib_v1.okhttp3.OkHttpClient;
 // Needed for `react-native link`
 // import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.rnfs.RNFSPackage;
 import com.brentvatne.react.ReactVideoPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.tanguyantoine.react.MusicControl;
+import com.rnfs.RNFSPackage;
 
 public class MainApplication extends ExpoApplication {
 
@@ -32,10 +32,10 @@ public class MainApplication extends ExpoApplication {
         // Needed for `react-native link`
         // new MainReactPackage(),
             new RNFetchBlobPackage(),
-            new VectorIconsPackage(),
-            new RNFSPackage(),
             new ReactVideoPackage(),
-            new MusicControl()
+            new VectorIconsPackage(),
+            new MusicControl(),
+            new RNFSPackage()
     );
   }
 

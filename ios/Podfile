@@ -100,6 +100,16 @@ target 'dmusic' do
     :inhibit_warnings => true
 
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  pod 'react-native-music-control', :path => '../node_modules/react-native-music-control'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   post_install do |installer|
     installer.pods_project.main_group.tab_width = '2';
     installer.pods_project.main_group.indent_width = '2';
