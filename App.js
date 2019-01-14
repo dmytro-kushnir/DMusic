@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {AppRegistry, Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {AppRegistry, Platform, StatusBar, StyleSheet, View, YellowBox} from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import reducer from './src/reducers';
 import AppNavigator from './src/navigation/AppNavigator';
 import {AppLoading, Asset, Font, Icon} from "expo";
+YellowBox.ignoreWarnings(['Class RCTCxxModule']);
+console.disableYellowBox = true;
 
 const RouterWithRedux = connect()(Router);
 const store = createStore(reducer);
