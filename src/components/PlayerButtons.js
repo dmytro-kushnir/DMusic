@@ -66,7 +66,7 @@ export class VolumeButton extends Component {
     return <FontAwesome
               onPress={this.props.toggleVolume}
               style={styles.volume}
-              name={this.props.volume?"volume-up": "volume-off"}
+              name={this.props.volume ? "volume-up" : "volume-off"}
               size={18}
               color="#fff">
           </FontAwesome>;

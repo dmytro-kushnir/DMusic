@@ -58,27 +58,27 @@ class PlayerScreen extends Component {
   setTime(params) {
     if( !this.state.sliding ){
       this.props.setTime(params);
-      this.setState({ currentTime: params.currentTime });
+      this.setState({currentTime: params.currentTime});
     }
   }
 
   onSlidingStart(){
-    this.setState({ sliding: true });
+    this.setState({sliding: true});
   }
 
   onSlidingChange(value){
     let newPosition = value * this.props.duration;
-    this.setState({ currentTime: newPosition });
+    this.setState({currentTime: newPosition});
   }
 
   onSlidingComplete(){
     this.props.onSlidingComplete(this.state.currentTime);
-    this.setState({ sliding: false });
+    this.setState({sliding: false});
   }
 
   onEnd(){
     this.props.onEnd();
-    this.setState({ playing: false });
+    this.setState({playing: false});
   }
 
   songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
