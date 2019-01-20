@@ -129,7 +129,8 @@ class PlayerScreen extends Component {
     if (this.props.songs[this.props.songIndex]) {
         return (
             <Video
-              source={{uri: this.props.songs[this.props.songIndex].path }}
+              source={{uri: this.props.songs[this.props.songIndex].path}}
+              style={Actions.currentScene === "player" ? styles.songVideo : null}
               volume={this.props.volume}
               muted={false}
               ref="audio"
@@ -140,7 +141,7 @@ class PlayerScreen extends Component {
               onLoad={this.onLoad.bind(this)}
               onProgress={this.setTime.bind(this)}
               onEnd={this.onEnd.bind(this)}
-              resizeMode="cover"
+              resizeMode="contain"
               repeat={false}>
             </Video>);
     }
@@ -173,6 +174,7 @@ class PlayerScreen extends Component {
     this.props.setPlayingSong(0, shuffledSongs);
   }
 
+
   transferSongs(indexToChange, shuffledSongs) {
     let newIndex = _.findIndex(shuffledSongs, {id: this.props.songs[this.props.songIndex].id});
     let songToChangeIndex = shuffledSongs[indexToChange];
@@ -199,7 +201,7 @@ class PlayerScreen extends Component {
     MusicControl.on('previousTrack', this.goBackward.bind(this));
   }
 
-  songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
+  songImage = require("../assets/images/icon.png");
 
   render() {
       let song = this.props.songs[this.props.songIndex];
@@ -213,11 +215,11 @@ class PlayerScreen extends Component {
               [styles.playerOverlay,
               {width: Actions.currentScene === 'player' ? 0 : width}]
             }
-            onPress={this.openPlayer.bind(this)}>
+            onPress={Actions.currentScene !== 'player' ? this.openPlayer.bind(this) : null}>
               {this.renderVideoPlayer()}
               <View
                   style={styles.minimizedPlayer}>
-                    {Actions.currentScene=== 'player' ? null:
+                    {Actions.currentScene === 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
                       source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>
@@ -292,5 +294,12 @@ const styles = StyleSheet.create({
   songImageSmall: {
     width: 45,
     height: 45
-  }
+  },
+  songVideo: {
+    position: 'absolute',
+    left: 15,
+    bottom: 350,
+    width: width - 30,
+    height: 300
+  },
 });

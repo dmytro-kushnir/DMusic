@@ -22,7 +22,7 @@ let {height, width} = Dimensions.get('window');
 class Song extends Component {
 
     state = {
-        songImage: "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/",
+        songImage: require("../assets/images/icon.png"),
         downloading: false
     };
 
