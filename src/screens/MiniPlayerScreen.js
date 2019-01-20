@@ -129,7 +129,7 @@ class PlayerScreen extends Component {
     if (this.props.songs[this.props.songIndex]) {
         return (
             <Video
-              source={{uri: this.props.songs[this.props.songIndex].path }}
+              source={{uri: this.props.songs[this.props.songIndex].path}}
               volume={this.props.volume}
               muted={false}
               ref="audio"
@@ -199,7 +199,7 @@ class PlayerScreen extends Component {
     MusicControl.on('previousTrack', this.goBackward.bind(this));
   }
 
-  songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
+  songImage = require("../assets/images/icon.png");
 
   render() {
       let song = this.props.songs[this.props.songIndex];
@@ -217,7 +217,7 @@ class PlayerScreen extends Component {
               {this.renderVideoPlayer()}
               <View
                   style={styles.minimizedPlayer}>
-                    {Actions.currentScene=== 'player' ? null:
+                    {Actions.currentScene === 'player' ? null:
                     <Image
                       style={styles.songImageSmall}
                       source={{uri: (Platform.OS === 'android' ? "file://" : "") + song.thumb}}>

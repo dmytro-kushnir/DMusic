@@ -106,30 +106,39 @@ export class DownloadButton extends Component {
 }
 
 export class SongSlider extends Component {
-  render() {
-    return (
-          <View style={ styles.sliderContainer }>
-            <Slider
-              {...this.props}
-              minimumTrackTintColor='#fff'
-              style={styles.slider}
-              trackStyle={styles.sliderTrack}
-              thumbStyle={styles.sliderThumb}>
-            </Slider>
-            <View
-                style={styles.timeInfo}>
-                  <Text
-                      style={styles.time }>
-                        {Utils.formattedTime(this.props.currentTime)}
-                  </Text>
-                  <Text
-                      style={styles.timeRight }>
-                        - { Utils.formattedTime( this.props.songDuration - this.props.currentTime )}
-                  </Text>
+    change(value) {
+        this.setState(() => {
+           console.log("!! value ! ", value);
+           return {
+               value: parseFloat(value)
+           }
+        });
+    }
+    render() {
+        return (
+            <View style={ styles.sliderContainer }>
+                <Slider
+                  {...this.props}
+                  minimumTrackTintColor='#fff'
+                  onValueChange={this.change.bind(this)}
+                  style={styles.slider}
+                  trackStyle={styles.sliderTrack}
+                  thumbStyle={styles.sliderThumb}>
+                </Slider>
+                <View
+                    style={styles.timeInfo}>
+                      <Text
+                          style={styles.time }>
+                            {Utils.formattedTime(this.props.currentTime)}
+                      </Text>
+                      <Text
+                          style={styles.timeRight }>
+                            - { Utils.formattedTime( this.props.songDuration - this.props.currentTime )}
+                      </Text>
+                </View>
             </View>
-        </View>
-    )
-  }
+        )
+    }
 }
 
 const styles = StyleSheet.create({

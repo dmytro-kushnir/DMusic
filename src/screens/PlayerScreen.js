@@ -81,7 +81,7 @@ class PlayerScreen extends Component {
     this.setState({playing: false});
   }
 
-  songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
+  songImage = require("../assets/images/icon.png");
 
   renderProgressBar() {
     let song = this.props.songs[this.props.songIndex];
@@ -98,7 +98,7 @@ class PlayerScreen extends Component {
 
   render() {
     let songPercentage;
-    if(this.props.duration){
+    if (this.props.duration) {
       songPercentage = this.props.currentTime / this.props.duration;
     } else {
       songPercentage = 0;
@@ -117,10 +117,16 @@ class PlayerScreen extends Component {
           downloadMusic={() => this.props.downloadMusic(this.props.songs[this.props.songIndex], this.props.songs[this.props.songIndex].pathChanged)}>
         </DownloadButton>
         {this.renderProgressBar()}
-        <Image
-          style={styles.songImage}
-          source={{uri: (Platform.OS === 'android' ? "file://" : "") + this.props.songs[this.props.songIndex].thumb}}>
-        </Image>
+        <Video
+          volume={this.props.volume}
+          paused={!this.props.playing}
+          source={{uri: this.props.songs[this.props.songIndex].path}}
+          >
+        </Video>
+        {/*<Image*/}
+          {/*style={styles.songImage}*/}
+          {/*source={{uri: (Platform.OS === 'android' ? "file://" : "") + this.props.songs[this.props.songIndex].thumb}}>*/}
+        {/*</Image>*/}
         <Text
             style={styles.songTitle}
             numberOfLines={1}>
@@ -132,6 +138,7 @@ class PlayerScreen extends Component {
           onValueChange={this.onSlidingChange.bind(this)}
           value={songPercentage}
           songDuration={this.props.duration}
+          step={1}
           currentTime={this.props.currentTime}
           disabled={true}>
         </SongSlider>
