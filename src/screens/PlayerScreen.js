@@ -15,10 +15,10 @@ import ActionCreators from '../actions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
 import * as Utils from '../helpers/utils';
-import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
+import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider, CloseButton} from '../components/PlayerButtons';
 import MusicControl from 'react-native-music-control';
 import * as Progress from 'react-native-progress';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import _ from 'underscore';
 
 let {height, width} = Dimensions.get('window');
@@ -39,11 +39,11 @@ class PlayerScreen extends Component {
     this.props.togglePlay(!this.props.playing);
   }
 
-  toggleVolume(){
+  toggleVolume() {
     this.props.setVolume(Math.abs(this.props.volume - 1));
   }
 
-  toggleShuffle(){
+  toggleShuffle() {
     this.props.toggleShuffle(!this.props.shuffle);
   }
 
@@ -56,32 +56,32 @@ class PlayerScreen extends Component {
   }
 
   setTime(params) {
-    if( !this.state.sliding ){
+    if( !this.state.sliding ) {
       this.props.setTime(params);
       this.setState({currentTime: params.currentTime});
     }
   }
 
-  onSlidingStart(){
+  onSlidingStart() {
     this.setState({sliding: true});
   }
 
-  onSlidingChange(value){
+  onSlidingChange(value) {
     let newPosition = value * this.props.duration;
     this.setState({currentTime: newPosition});
   }
 
-  onSlidingComplete(){
+  onSlidingComplete() {
     this.props.onSlidingComplete(this.state.currentTime);
     this.setState({sliding: false});
   }
 
-  onEnd(){
+  onEnd() {
     this.props.onEnd();
     this.setState({playing: false});
   }
 
-  songImage = "http://raptorrrrrrrrr.pythonanywhere.com/music_ico/";
+  songImage = require("../assets/images/icon.png");
 
   renderProgressBar() {
     let song = this.props.songs[this.props.songIndex];
@@ -96,9 +96,13 @@ class PlayerScreen extends Component {
     return null
   }
 
+  closeScreen() {
+    Actions.pop();
+  }
+
   render() {
     let songPercentage;
-    if(this.props.duration){
+    if (this.props.duration) {
       songPercentage = this.props.currentTime / this.props.duration;
     } else {
       songPercentage = 0;
@@ -110,6 +114,9 @@ class PlayerScreen extends Component {
             {this.props.songs[this.props.songIndex].artist}
           </Text>
         </View>
+        <CloseButton
+          closeScreen={() => this.closeScreen()}>
+        </CloseButton>
         <DownloadButton
           download={this.props.searchedSongs}
           downloading={this.props.songs[this.props.songIndex].downloading}
@@ -117,10 +124,6 @@ class PlayerScreen extends Component {
           downloadMusic={() => this.props.downloadMusic(this.props.songs[this.props.songIndex], this.props.songs[this.props.songIndex].pathChanged)}>
         </DownloadButton>
         {this.renderProgressBar()}
-        <Image
-          style={styles.songImage}
-          source={{uri: (Platform.OS === 'android' ? "file://" : "") + this.props.songs[this.props.songIndex].thumb}}>
-        </Image>
         <Text
             style={styles.songTitle}
             numberOfLines={1}>
@@ -132,6 +135,7 @@ class PlayerScreen extends Component {
           onValueChange={this.onSlidingChange.bind(this)}
           value={songPercentage}
           songDuration={this.props.duration}
+          step={1}
           currentTime={this.props.currentTime}
           disabled={true}>
         </SongSlider>
@@ -201,11 +205,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     textAlign: 'center',
-  },
-  songImage: {
-    marginBottom: 20,
-    width: width - 30,
-    height: 300
+    marginBottom: 250,
   },
   songTitle: {
     color: "white",

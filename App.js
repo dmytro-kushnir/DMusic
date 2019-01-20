@@ -12,9 +12,6 @@ console.disableYellowBox = true;
 const RouterWithRedux = connect()(Router);
 const store = createStore(reducer);
 
-// const YoutubePlayer = () => <AppNavigator />;
-
-// AppRegistry.registerComponent('YoutubePlayer', () => YoutubePlayer);
 
 export default class App extends React.Component {
   state = {
