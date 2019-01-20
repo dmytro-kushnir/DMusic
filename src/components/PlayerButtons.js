@@ -87,7 +87,7 @@ export class ShuffleButton extends Component {
 
 export class DownloadButton extends Component {
   render() {
-    if(this.props.downloading || this.props.downloaded) {
+    if (this.props.downloading || this.props.downloaded) {
       return  <FontAwesome
                 style={styles.downloadButton}
                 name="download"
@@ -104,6 +104,18 @@ export class DownloadButton extends Component {
             </FontAwesome>;
   }
 }
+
+export class CloseButton extends Component {
+    render() {
+      return  <FontAwesome
+                onPress={this.props.closeScreen}
+                style={styles.closeButton}
+                name="close"
+                size={25}
+                color="#fff">
+              </FontAwesome>;
+    }
+  }
 
 export class SongSlider extends Component {
     change(value) {
@@ -159,6 +171,13 @@ const styles = StyleSheet.create({
     },
     shuffle: {
         marginTop: 26,
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 10,
+        left: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     downloadButton: {
         position: 'absolute',
