@@ -51,6 +51,7 @@ export default class AppNavigator extends Component {
                         </Scene>
                     </Scene>
                     <Scene
+                        drawerLockMode='locked-closed' gesturesEnabled={false}
                         key="player"
                         component={PlayerScreen}
                         hideNavBar
