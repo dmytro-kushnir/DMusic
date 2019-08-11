@@ -4,6 +4,7 @@ buildscript {
   repositories {
     google()
     jcenter()
+    maven { url 'https://dl.bintray.com/android/android-tools/' }
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:3.1.4'
@@ -58,6 +59,7 @@ allprojects {
       dirs 'libs'
       // dirs project(':expoview').file('libs')
     }
+    maven { url "https://google.bintray.com/exoplayer" }
     maven { url "https://jitpack.io" }
 
     // Want this last so that we never end up with a stale cache

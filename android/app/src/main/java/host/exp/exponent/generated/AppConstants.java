@@ -24,12 +24,9 @@ public class AppConstants {
   static {
     List<Constants.EmbeddedResponse> embeddedResponses = new ArrayList<>();
 
-    
-        // ADD EMBEDDED RESPONSES HERE
-        // START EMBEDDED RESPONSES
-        embeddedResponses.add(new Constants.EmbeddedResponse("https://exp.host/@raptorrrrrrrrr/DMusic", "assets://shell-app-manifest.json", "application/json"));
-        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40raptorrrrrrrrr%2FDMusic%2F1.0.0%2Fb8a389d76f017e09ed845b5093166216-31.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
-        // END EMBEDDED RESPONSES
+    // ADD EMBEDDED RESPONSES HERE
+    // START EMBEDDED RESPONSES
+    // END EMBEDDED RESPONSES
     EMBEDDED_RESPONSES = embeddedResponses;
   }
 

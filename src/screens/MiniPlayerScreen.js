@@ -296,9 +296,9 @@ const styles = StyleSheet.create({
     height: 45
   },
   songVideo: {
-    position: 'absolute',
+    position: 'relative',
     left: 15,
-    bottom: 350,
+    bottom: height - width / 2 ,
     width: width - 30,
     height: 300
   },
