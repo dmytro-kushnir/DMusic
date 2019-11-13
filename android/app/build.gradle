@@ -103,6 +103,11 @@ apply from: 'expo.gradle'
 apply from: "../../node_modules/react-native-unimodules/gradle.groovy"
 
 dependencies {
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-video')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-music-control')
+    implementation project(':react-native-fs')
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation 'com.android.support:multidex:1.0.1'

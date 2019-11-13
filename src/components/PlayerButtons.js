@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 import Button from 'react-native-button';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {Ionicons} from '@expo/vector-icons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Slider from 'react-native-slider';
 import * as Utils from '../helpers/utils';
@@ -15,13 +15,13 @@ let {height, width} = Dimensions.get('window');
 
 export class PlayButton extends Component {
   render() {
-    return <Icon
+    return <Ionicons
               color="#fff"
               name={this.props.playing ? "ios-pause" : "ios-play"}
               onPress={this.props.togglePlay}
               size={70}
               style={styles.play}>
-          </Icon>;
+          </Ionicons>;
   }
 }
 

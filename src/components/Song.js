@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {Ionicons} from '@expo/vector-icons';
 import Swipeout from 'react-native-swipeout';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import {connect} from 'react-redux';
@@ -129,10 +129,10 @@ function renderProgressBar(downloads) {
         <TouchableOpacity
             onPress={() => !song.downloading && this.downloadMusic(song)}
             style={{width: 60, paddingLeft: 20}}>
-            <Icon
+            <Ionicons
                 name='md-download'
                 size={40}>
-            </Icon>
+            </Ionicons>
         </TouchableOpacity>
     )
 }

@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import reducer from './src/reducers';
 import AppNavigator from './src/navigation/AppNavigator';
-import {AppLoading, Asset, Font, Icon} from "expo";
+import {AppLoading} from "expo";
 YellowBox.ignoreWarnings(['Class RCTCxxModule']);
 console.disableYellowBox = true;
 
@@ -37,17 +37,17 @@ export default class App extends React.Component {
     }
   }
 
-  _loadResourcesAsync = async () => {
-    return Promise.all([
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in SearchScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./src/assets/fonts/SpaceMono-Regular.ttf'),
-      }),
-    ]);
-  };
+  // _loadResourcesAsync = async () => {
+  //   return Promise.all([
+  //     Font.loadAsync({
+  //       // This is the font that we are using for our tab bar
+  //       ...Icon.Ionicons.font,
+  //       // We include SpaceMono because we use it in SearchScreen.js. Feel free
+  //       // to remove this if you are not using it in your app
+  //       'space-mono': require('./src/assets/fonts/SpaceMono-Regular.ttf'),
+  //     }),
+  //   ]);
+  // };
 
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error

@@ -12,14 +12,16 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "@expo/vector-icons": "^10.0.6",
     "expo": "^35.0.1",
-    "expokit": "^35.0.3",
+    "expo-font": "~7.0.0",
+    "expokit": "35.0.3",
     "react": "^16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-button": "^2.3.0",
     "react-native-circular-progress": "^1.1.0",
-    "react-native-fs": "^2.13.3",
-    "react-native-music-control": "^0.9.6",
+    "react-native-fs": "2.15.2",
+    "react-native-music-control": "0.10.7",
     "react-native-platform-touchable": "^1.1.1",
     "react-native-progress": "^3.5.0",
     "react-native-router-flux": "^4.0.6",
@@ -32,7 +34,7 @@
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "rn-fetch-blob": "^0.10.15",
+    "rn-fetch-blob": "0.10.15",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

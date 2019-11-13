@@ -18,7 +18,7 @@ import * as Utils from '../helpers/utils';
 import {ForwardButton, BackwardButton, PlayButton, ShuffleButton, VolumeButton, DownloadButton, SongSlider} from '../components/PlayerButtons';
 import MusicControl from 'react-native-music-control';
 import * as Progress from 'react-native-progress';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {Ionicons} from '@expo/vector-icons';
 import _ from 'underscore';
 
 let {height, width} = Dimensions.get('window');
